@@ -1,0 +1,171 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	layout:decorate="~{layout/default}">
+<head>
+<meta charset="UTF-8">
+<title>공지사항</title>
+<script>
+
+	$(function() {
+
+		var $tbody = $('.table-notice tbody');
+
+		<!--/* 초기화 버튼 */-->
+		$("#btn-reset").click(function(){
+			$('#form-condition').get(0).reset();
+		});
+
+		<!--/* 검색 버튼 */-->
+		$("#btn-search").click(function(){
+			getList(1);
+		});
+
+		<!--/* 등록 버튼 */-->
+		$("#btn-add").click(function(){
+			location.href = '/svc/screen/notice/add'
+		});
+
+		<!--/* 출력 개수 변경 */-->
+		$('#itemsPerPage').change(function() {
+			getList(1);
+		});
+
+		function getList(page) {
+			$component.get($("#form-condition"), {
+				url: "[(@{/api/notice})]",
+				data: {
+					page: page,
+					itemsPerPage: $('#itemsPerPage').val()
+				},
+				success: function (data, status, xhr) {
+
+					$tbody.empty();
+
+					if (data.totalItems === 0) {
+						$tbody.html('<td colspan="6" class="text-center">데이터가 없습니다.</td>');
+						$('#pagination').empty();
+						$('#total-items').text(0);
+						return;
+					}
+
+					$.each(data.list, function(i, e) {
+
+						e.href = '/api/notice/' + e.noticeId;
+
+						$tbody.append(Mustache.render($('#tmpl-notice').html(), e));
+					});
+
+					$component.pagination({
+						id 			 : 'pagination',
+						page		 : data.page,
+				        totalItems	 : data.totalItems,
+				        itemsPerPage : data.itemsPerPage,
+						click 	 	 : function(evt) {
+							getList(evt.page);
+						}
+					});
+
+					$('#total-items').text(data.totalItems);
+				}
+			});
+		}
+
+		<!--/* 초기화*/-->
+		$('#beginDt, #endDt').datetimepicker({
+			timepicker:false,
+			format:'Y-m-d'
+		});
+
+		getList(1);
+	});
+</script>
+<script type="text/tmpl" id="tmpl-notice">
+	<tr>
+		<td>{{rowNum}}</td>
+		<td class="width-400 ellipsis d-table-cell"><a href="{{href}}">{{title}}</a></td>
+		<td>{{createdDtime}}</td>
+		<td>{{creatorNm}} ({{creatorId}})</td>
+		<td>{{updatedDtime}}</td>
+		<td>{{readCnt}}</td>
+	</tr>
+</script>
+</head>
+<body>
+	<th:block layout:fragment="content">
+		<div class="row">
+			<div class="col-12">
+				<div class="card mb-1">
+					<div class="card-header mb-1">
+						<h3 class="float-left">공지사항 목록</h3>
+						<button type="button" class="btn btn-outline-info mr-1 float-right" id="btn-add">등록</button>
+		            </div>
+					<div class="card-body ml-2 mr-2 col-md-10 mt-0 mb-0 pt-1 pb-0" style="background-color: #f7f7f7;">
+						<form id="form-condition" class="form form-horizontal ml-2 ">
+							<div class="form-body ">
+								<div class="form-group row">
+									<label class="col-md-1 col-form-label px-0">등록일</label>
+									<div class="col-md-11">
+										<input type="text" id="beginDt" class="col-md-2 form-control d-inline" name="beginDt" autocomplete="off">
+										<span class="mx-2">-</span>
+										<input type="text" id="endDt" class="col-md-2 form-control d-inline" name="endDt" autocomplete="off">
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="col-md-1 col-form-label px-0">제목</label>
+									<div class="col-md-4">
+										<input type="text" class="form-control" id="title" name="title" autocomplete="off">
+									</div>
+									<div class="col-md-7 text-right">
+										<button type="button" id="btn-reset" class="btn btn-secondary btn-min-width mr-1">
+											<i class="ft-x"></i> 초기화
+										</button>
+										<button type="button" id="btn-search" class="btn btn-info btn-min-width mr-1">
+											<i class="ft-search"></i>검색
+										</button>
+									</div>
+								</div>
+							</div>
+							<input type="hidden"/>
+						</form>
+					</div>
+					<div class="card-body pb-1">
+						<div class="row">
+							<div class="d-flex align-items-center col-md-6 text-left ">
+								<p class="text-bold-600 pl-1 mb-0">
+									전체 <span id="total-items"></span>
+								</p>
+							</div>
+						</div>
+					</div>
+					<div class="card-body pt-0">
+						<table class="table table-bordered table-notice col-10" style="table-layout:fixed">
+						    <thead>
+						        <tr>
+						            <th class="width-100">번호</th>
+						            <th class="width-400">제목</th>
+						            <th class="width-200">작성일</th>
+						            <th class="width-200">작성자</th>
+						            <th class="width-200">최종수정일</th>
+						            <th class="width-100">조회수</th>
+						        </tr>
+						    </thead>
+						    <tbody>
+						    </tbody>
+						</table>
+						<div class="itemsPerPage-wrap my-1 text-right">
+								<select id="itemsPerPage" name="keyfield" class="form-control d-inline-block width-100">
+									<option value="20" selected="selected">20</option>
+									<option value="50">50</option>
+									<option value="100">100</option>
+									<option value="200">200</option>
+									<option value="300">300</option>
+								</select>
+							</div>
+						<div id="pagination" class="tui-pagination"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</th:block>
+</body>

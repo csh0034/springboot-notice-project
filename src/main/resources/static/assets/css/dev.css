@@ -1,0 +1,80 @@
+/* 폰트 */
+:root, html, body, input, button, select, optgroup, textarea, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, .tooltip, .popover, .text-monospace, .ui-widget, nav, ol, li, ul, .ui-jqgrid-view {
+	font-family: 'NotoKr', sans-serif;
+}
+
+/* 데이트피커  달력아이콘 */
+.date-icon-begin, .date-icon-end {
+	font-size: 25px;
+}
+.date-icon-begin::before, .date-icon-end::before {
+	content: "\f073";
+	font-family: Fontawesome;
+	cursor: pointer;
+}
+
+/* 데이터 출력 폼 */
+.col-form {
+	min-height: 70px;
+    font-size: inherit;
+    line-height: 1.25;
+    margin-bottom: 0;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -moz-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+
+    padding-top: -webkit-calc(.75rem + 1px);
+    padding-top:    -moz-calc(.75rem + 1px);
+    padding-top:         calc(.75rem + 1px);
+    padding-bottom: -webkit-calc(.75rem + 1px);
+    padding-bottom:    -moz-calc(.75rem + 1px);
+    padding-bottom:         calc(.75rem + 1px);
+}
+
+.bold {
+	font-weight: bold !important;
+}
+
+form.form-bordered .form-group > div
+{
+    padding: 1.2rem;
+    border-left: 0px;
+}
+
+form.form-bordered .form-group > input
+{
+    padding-right: 1.2rem;
+}
+
+.modal-dialog-scrollable {
+	display: -ms-flexbox;
+	display: flex;
+    max-height: calc(100% - 3.5rem);
+}
+.modal-dialog-scrollable .modal-body{
+   	max-height: calc(100% - 3.5rem);
+   	overflow-y :auto;
+}
+
+.ellipsis{
+	display: inline-block;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.pre-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.ui-widget-content.jqgrow.ui-row-ltr > td > a {
+	color: #007bff;
+}
