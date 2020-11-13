@@ -4,5 +4,8 @@
 <configuration>
     <settings>
         <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <setting name="jdbcTypeForNull" value="NULL" />
+        <setting name="defaultExecutorType" value="REUSE" />
+        <setting name="defaultFetchSize" value="1000" />
     </settings>
 </configuration>

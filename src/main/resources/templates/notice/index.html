@@ -4,7 +4,7 @@
 	layout:decorate="~{layout/default}">
 <head>
 <meta charset="UTF-8">
-<title>공지사항</title>
+<title>목록</title>
 <script>
 
 	$(function() {
@@ -51,7 +51,7 @@
 
 					$.each(data.list, function(i, e) {
 
-						e.href = '/api/notice/' + e.noticeId;
+						e.href = '/screen/notice/detail?noticeId=' + e.noticeId;
 
 						$tbody.append(Mustache.render($('#tmpl-notice').html(), e));
 					});
@@ -155,7 +155,8 @@
 						</table>
 						<div class="itemsPerPage-wrap my-1 text-right">
 								<select id="itemsPerPage" name="keyfield" class="form-control d-inline-block width-100">
-									<option value="20" selected="selected">20</option>
+									<option value="10" selected="selected">10</option>
+									<option value="20">20</option>
 									<option value="50">50</option>
 									<option value="100">100</option>
 									<option value="200">200</option>

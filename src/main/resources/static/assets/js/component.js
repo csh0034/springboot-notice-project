@@ -700,6 +700,7 @@ $component.multipart.post = function($form, options){
 		success: function(data, status, xhr) {
 		}
 	};
+
 	var opt = $.extend(defaults, options);
 
 	var formData = new FormData($form[0]);
@@ -719,7 +720,6 @@ $component.multipart.post = function($form, options){
 			formData.append(opt.fileParameter, file);
 		});
 	}
-
 
 	var progress = '<div class="progress">' +
 					'<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" style="width:0%"></div>'+

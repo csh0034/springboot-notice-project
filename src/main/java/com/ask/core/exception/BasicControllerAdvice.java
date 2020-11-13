@@ -25,7 +25,7 @@ public class BasicControllerAdvice {
 			return processAjax(e);
 		}
 
-		ModelAndView mv = new ModelAndView("/error");
+		ModelAndView mv = new ModelAndView("error/error");
 
 		if (e instanceof InvalidationException) {
 			mv.addObject("message", ((InvalidationException) e).getExceptionMessage().getMessage());

@@ -4,10 +4,10 @@
 	<th:block th:insert="common/meta::meta"/>
 	<th:block th:insert="common/css::css"/>
 	<th:block th:insert="common/js::js"/>
-	<title layout:title-pattern="$CONTENT_TITLE : $LAYOUT_TITLE">ASk</title>
+	<title layout:title-pattern="$CONTENT_TITLE : $LAYOUT_TITLE">공지사항</title>
 	<script>
 		$(function() {
-			var uri = window.location.pathname.replace(/detail|add|modify/,'index');
+			var uri = window.location.pathname.replace(/detail|add|modify/,'index').replace(/\/svc/, '');
 
 			var $menuURI = $(".menu-content a[href='" + uri + "']");
 			var $menuItems = $(".menu-content li");

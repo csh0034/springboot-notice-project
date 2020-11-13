@@ -1,4 +1,4 @@
-package com.ask.project.api.attachment.service.impl;
+package com.ask.project.api.attachment.service;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,11 +24,12 @@ import com.ask.core.util.CoreUtils.file;
 import com.ask.core.util.CoreUtils.property;
 import com.ask.core.util.CoreUtils.string;
 import com.ask.core.util.CoreUtils.webutils;
+import com.ask.project.api.attachment.service.impl.AttachmentMapper;
 import com.ask.project.api.attachment.vo.AttachmentGroupVO;
 import com.ask.project.api.attachment.vo.AttachmentVO;
 
 @Service("attachmentService")
-public class AttachmentServiceImpl {
+public class AttachmentService {
 	public final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	public static final String SINGLE_FILE_GROUP_ID = "single-file-group-id";

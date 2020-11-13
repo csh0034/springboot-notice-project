@@ -34,6 +34,16 @@
 		</if>
 	</sql>
 
+	<select id="selectNoticeInfo" resultType="com.ask.project.api.notice.vo.NoticeVO">
+		/* NoticeMapper.selectNoticeInfo */
+		SELECT
+			<include refid="notice-cols" />
+		FROM
+			COMT_NOTICE
+		WHERE
+			NOTICE_ID = #{noticeId}
+	</select>
+
 	<select id="selectNoticeListCount" resultType="Long">
 		/* NoticeMapper.selectNoticeListCount */
 		SELECT
@@ -64,4 +74,58 @@
 		ORDER BY CREATED_DT DESC
 		LIMIT #{beginRow}, #{itemsPerPage}
 	</select>
+
+	<update id="updateNoticeReadCnt">
+		/* NoticeMapper.selectNoticeList */
+		UPDATE COMT_NOTICE SET
+			READ_CNT = READ_CNT + 1
+		WHERE
+			NOTICE_ID = #{noticeId}
+	</update>
+
+	<delete id="deleteNoticeInfo">
+		/* NoticeMapper.deleteNoticeInfo */
+		DELETE FROM
+			COMT_NOTICE
+		WHERE
+			NOTICE_ID = #{noticeId}
+	</delete>
+
+	<update id="updateNoticeInfo">
+		/* NoticeMapper.updateNoticeInfo */
+		UPDATE COMT_NOTICE SET
+			TITLE               = #{title},
+			CONTENT             = #{content},
+			READ_CNT            = #{readCnt},
+			ATTACHMENT_GROUP_ID = #{attachmentGroupId},
+			COMPLETED           = #{completed},
+			CREATOR_ID          = #{creatorId},
+			CREATED_DT          = #{createdDt},
+			UPDATER_ID          = #{updaterId},
+			UPDATED_DT          = #{updatedDt}
+		WHERE
+			NOTICE_ID = #{noticeId}
+	</update>
+
+	<insert id="insertNoticeInfo">
+		/* NoticeMapper.insertNoticeInfo */
+		INSERT INTO COMT_NOTICE (
+			NOTICE_ID,
+			READ_CNT,
+			COMPLETED,
+			CREATOR_ID,
+			CREATED_DT,
+			UPDATER_ID,
+			UPDATED_DT
+		) VALUES (
+			#{noticeId},
+			#{readCnt},
+			#{completed},
+			#{creatorId},
+			#{createdDt},
+			#{updaterId},
+			#{updatedDt}
+		)
+	</insert>
+
 </mapper>

@@ -14,7 +14,7 @@ public class WindowsProfile {
 	public BasicProperties basicProperties() {
 		return BasicProperties.builder()
 					.profile("widnows")
-					.uploadDir("c:/springboot/data/upload")
+					.uploadDir("c:/temp-upload")
 					.build();
 	}
 }

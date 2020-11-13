@@ -1,4 +1,4 @@
-package com.ask.project.screen;
+package com.ask.core.error;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 public class CustomErrorController implements ErrorController {
 
 	private static final String ERROR_MAPPING_PATH = "/error";
-	private static final String ERROR_PAGE_PATH = "/error";
+	private static final String ERROR_PAGE_PATH = "error";
 
 	@Override
 	public String getErrorPath() {

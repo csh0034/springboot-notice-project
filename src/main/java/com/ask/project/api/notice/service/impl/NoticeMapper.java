@@ -11,6 +11,8 @@ import com.ask.project.api.notice.vo.NoticeVO;
 @Mapper
 public interface NoticeMapper {
 
+	NoticeVO selectNoticeInfo(String noticeId);
+
 	long selectNoticeListCount(
 			@Param("title") 	String title,
 			@Param("beginDt")	Date createdDt,
@@ -24,4 +26,11 @@ public interface NoticeMapper {
 			@Param("endRowNum") 	Long endRowNum,
 			@Param("totalItems") 	Long totalItems);
 
+	void updateNoticeReadCnt(String noticeId);
+
+	void deleteNoticeInfo(String noticeId);
+
+	void updateNoticeInfo(NoticeVO notice);
+
+	void insertNoticeInfo(NoticeVO notice);
 }
