@@ -136,9 +136,6 @@ public class NoticeServiceImpl implements NoticeService {
 		String attGroupId = dbNotice.getAttachmentGroupId();
 
 		if (files != null && files.length > 0) {
-
-			System.out.println(files[0]);
-
 			if (string.isBlank(attGroupId)) {
 				AttachmentGroupVO attGroup = attService.uploadFiles_toNewGroup(properties.getUploadDir(), files, null, maxFileSize);
 				attGroupId = attGroup.getAttachmentGroupId();

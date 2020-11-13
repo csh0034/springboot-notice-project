@@ -15,7 +15,7 @@ OS X:
 ./gradlew clean bootRun --args='--spring.profiles.active=mac'
 ```
 
-윈도우:
+Windows:
 
 ```sh
 ./gradlew clean bootRun --args='--spring.profiles.active=windows'
