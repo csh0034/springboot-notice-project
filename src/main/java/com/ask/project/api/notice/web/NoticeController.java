@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,7 @@ import com.ask.core.util.CoreUtils.string;
 import com.ask.project.api.attachment.service.AttachmentService;
 import com.ask.project.api.attachment.vo.AttachmentVO;
 import com.ask.project.api.notice.service.NoticeService;
+import com.ask.project.api.notice.vo.NoticeParam;
 import com.ask.project.api.notice.vo.NoticeVO;
 import com.ask.project.common.util.pagination.CorePagination;
 import com.ask.project.common.util.pagination.CorePaginationParam;
@@ -43,8 +45,14 @@ public class NoticeController {
 	@Autowired
 	private BasicProperties properties;
 
+	@Autowired
+	private HttpSession session;
+
 	@GetMapping("/api/notice")
 	public CorePagination<NoticeVO> list(CorePaginationParam param, String title, Date beginDt, Date endDt) {
+
+		session.setAttribute("noticeParam", new NoticeParam(param.getPage(), param.getItemsPerPage(), title, beginDt, endDt));
+
 		return noticeService.selectNoticeList(param, title, beginDt, endDt);
 	}
 

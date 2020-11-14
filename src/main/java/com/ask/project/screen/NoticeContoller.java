@@ -1,15 +1,19 @@
 package com.ask.project.screen;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ask.core.exception.InvalidationException;
 import com.ask.core.security.SecurityUser;
 import com.ask.core.security.SecurityUtils;
 import com.ask.core.util.CoreUtils.string;
 import com.ask.project.api.notice.service.NoticeService;
+import com.ask.project.api.notice.vo.NoticeParam;
 import com.ask.project.api.notice.vo.NoticeVO;
 
 @Controller("secreenNoticeController")
@@ -21,8 +25,22 @@ public class NoticeContoller {
 	@Autowired
 	private SecurityUtils securityUtils;
 
+	@Autowired
+	private HttpSession session;
+
 	@GetMapping("/screen/notice/index")
-	public String index() {
+	public String index(Model model, @RequestParam(defaultValue = "false") Boolean condition) {
+
+		if (condition) {
+
+			NoticeParam noticeParam = (NoticeParam)session.getAttribute("noticeParam");
+
+			if (noticeParam != null) {
+				model.addAttribute(noticeParam);
+			}
+		}
+
+
 		return "notice/index";
 	}
 

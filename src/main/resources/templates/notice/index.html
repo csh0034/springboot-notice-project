@@ -13,7 +13,7 @@
 
 		<!--/* 초기화 버튼 */-->
 		$("#btn-reset").click(function(){
-			$('#form-condition').get(0).reset();
+			$('#form-condition input').val('');
 		});
 
 		<!--/* 검색 버튼 */-->
@@ -23,7 +23,7 @@
 
 		<!--/* 등록 버튼 */-->
 		$("#btn-add").click(function(){
-			location.href = '/svc/screen/notice/add'
+			location.href = '/svc/screen/notice/add';
 		});
 
 		<!--/* 출력 개수 변경 */-->
@@ -77,13 +77,13 @@
 			format:'Y-m-d'
 		});
 
-		getList(1);
+		getList('[(${noticeParam == null ? 1 : noticeParam.page})]');
 	});
 </script>
 <script type="text/tmpl" id="tmpl-notice">
 	<tr>
 		<td>{{rowNum}}</td>
-		<td class="width-400 ellipsis d-table-cell"><a href="{{href}}">{{title}}</a></td>
+		<td><a href="{{href}}" class="width-400 ellipsis">{{title}}</a></td>
 		<td>{{createdDtime}}</td>
 		<td>{{creatorNm}} ({{creatorId}})</td>
 		<td>{{updatedDtime}}</td>
@@ -106,15 +106,18 @@
 								<div class="form-group row">
 									<label class="col-md-1 col-form-label px-0">등록일</label>
 									<div class="col-md-11">
-										<input type="text" id="beginDt" class="col-md-2 form-control d-inline" name="beginDt" autocomplete="off">
+										<input type="text" id="beginDt" class="col-md-2 form-control d-inline" name="beginDt" autocomplete="off"
+											th:value="${noticeParam?.beginDe == null ? '' : noticeParam.beginDe}">
 										<span class="mx-2">-</span>
-										<input type="text" id="endDt" class="col-md-2 form-control d-inline" name="endDt" autocomplete="off">
+										<input type="text" id="endDt" class="col-md-2 form-control d-inline" name="endDt" autocomplete="off"
+											th:value="${noticeParam?.endDe == null ? '' : noticeParam.endDe}">
 									</div>
 								</div>
 								<div class="form-group row">
 									<label class="col-md-1 col-form-label px-0">제목</label>
 									<div class="col-md-4">
-										<input type="text" class="form-control" id="title" name="title" autocomplete="off">
+										<input type="text" class="form-control" id="title" name="title" autocomplete="off"
+											th:value="${noticeParam?.title == null ? '' : noticeParam.title}">
 									</div>
 									<div class="col-md-7 text-right">
 										<button type="button" id="btn-reset" class="btn btn-secondary btn-min-width mr-1">
@@ -131,7 +134,7 @@
 					</div>
 					<div class="card-body pb-1">
 						<div class="row">
-							<div class="d-flex align-items-center col-md-6 text-left ">
+							<div class="d-flex align-items-center col-md-6 text-left">
 								<p class="text-bold-600 pl-1 mb-0">
 									전체 <span id="total-items"></span>
 								</p>
@@ -139,11 +142,11 @@
 						</div>
 					</div>
 					<div class="card-body pt-0">
-						<table class="table table-bordered table-notice col-10" style="table-layout:fixed">
+						<table class="table table-bordered table-notice col-10">
 						    <thead>
 						        <tr>
 						            <th class="width-100">번호</th>
-						            <th class="width-400">제목</th>
+						            <th>제목</th>
 						            <th class="width-200">작성일</th>
 						            <th class="width-200">작성자</th>
 						            <th class="width-200">최종수정일</th>
@@ -155,12 +158,11 @@
 						</table>
 						<div class="itemsPerPage-wrap my-1 text-right">
 								<select id="itemsPerPage" name="keyfield" class="form-control d-inline-block width-100">
-									<option value="10" selected="selected">10</option>
-									<option value="20">20</option>
-									<option value="50">50</option>
-									<option value="100">100</option>
-									<option value="200">200</option>
-									<option value="300">300</option>
+									<option value="10"  th:selected="${#strings.equals('10', noticeParam?.itemsPerPage)}">10</option>
+									<option value="20"  th:selected="${#strings.equals('20', noticeParam?.itemsPerPage)}">20</option>
+									<option value="50"  th:selected="${#strings.equals('50', noticeParam?.itemsPerPage)}">50</option>
+									<option value="100" th:selected="${#strings.equals('100', noticeParam?.itemsPerPage)}">100</option>
+									<option value="200" th:selected="${#strings.equals('200', noticeParam?.itemsPerPage)}">200</option>
 								</select>
 							</div>
 						<div id="pagination" class="tui-pagination"></div>

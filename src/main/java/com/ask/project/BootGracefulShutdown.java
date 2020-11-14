@@ -29,6 +29,10 @@ public class BootGracefulShutdown
 
 		log.debug("Call Graceful Shutdown");
 
+		if (connector == null) {
+			return;
+		}
+
 		this.connector.pause();
 
 		Executor executor = this.connector.getProtocolHandler().getExecutor();

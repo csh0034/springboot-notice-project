@@ -39,9 +39,21 @@
             }
         });
 
+		<!--/* 취소 버튼 */-->
+		$('#btn-cancel').click(function(){
+
+			if (!confirm('취소하시겠습니까?')) return;
+
+			if (isModify === 'true') {
+				location.href= '/screen/notice/detail?noticeId=' + noticeId;
+			} else {
+				location.href = '/screen/notice/index?condition=true';
+			}
+		});
+
 		<!--/* 목록 버튼 */-->
 		$('#btn-list').click(function(){
-			location.href = '/screen/notice/index';
+			location.href = '/screen/notice/index?condition=true';
 		});
 
 		<!--/* 저장 버튼  */-->
@@ -56,8 +68,6 @@
 				return;
 			}
 			if (!confirm('저장하시겠습니까?')) return;
-
-			console.log($component.multipart.getFiles($('#filezone')))
 
 			$component.multipart.post($('<form>'), {
 				url: '/svc/api/notice/' + noticeId,
@@ -127,6 +137,8 @@
 		                </div>
 		                <div class="card-body py-1 px-0 mx-1">
 		                    <div class="text-center">
+		                    	<button type="button" id="btn-cancel" class="btn btn-outline-danger mr-1">
+	                            <i class="ft-x"></i> 취소</button>
 		                        <button type="button" id="btn-save" class="btn btn-outline-warning mr-1">
 		                        <i class="ft-edit"></i> 저장</button>
 		                        <button type="button" id="btn-list" class="btn btn-outline-info">
