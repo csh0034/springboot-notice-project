@@ -8,7 +8,7 @@
 ![Generic badge](https://img.shields.io/badge/mybatis-3.5.4-green.svg)
 ![Generic badge](https://img.shields.io/badge/eclipse-2020/03-purple.svg)
 
-## 실행 방법
+### 실행 방법
 
 Windows:
 
@@ -20,6 +20,12 @@ OS X or Linux:
 
 ```sh
 ./gradlew clean bootRun --args='--spring.profiles.active=mac'
+```
+
+### 테스트 방법
+
+```sh
+./gradlew clean test
 ```
 
 ### 빌드 및 jar 실행 방법

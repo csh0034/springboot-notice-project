@@ -2,14 +2,12 @@ package com.ask.project.support;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import javax.servlet.http.Cookie;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
-import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
@@ -17,22 +15,19 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.request.RequestPostProcessor;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 @Transactional
 @SpringBootTest
 @AutoConfigureMockMvc
-@ActiveProfiles("windows")
+@ActiveProfiles("mac")
 public class TestControllerSupport {
 
 	private static final String TEST_USERNAME = "user1";
-	private static final String TEST_PASSWORD = "1234";
+	private static final String TEST_PASSWORD = "springboot!";
 
 	protected HttpHeaders headers = new HttpHeaders();
-	protected Cookie[] cookies = null;
+	protected MockHttpSession session;
 
 	@Autowired
 	protected MockMvc mvc;
@@ -40,46 +35,33 @@ public class TestControllerSupport {
 	@BeforeEach
 	public void setup() throws Exception {
 
-		MockHttpServletRequest request = new MockHttpServletRequest();
-		RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
-
 		RequestBuilder builder = MockMvcRequestBuilders.post("/security/check")
 				.param("username", TEST_USERNAME)
 				.param("password", TEST_PASSWORD);
 
-		MvcResult result = this.mvc.perform(builder).andExpect(status().isFound()).andReturn();
-		cookies = result.getResponse().getCookies();
+		MvcResult  mvcResult = this.mvc.perform(builder).andExpect(status().isFound()).andReturn();
 		headers.set("X-Requested-With", "XMLHttpRequest");
+
+		session = (MockHttpSession) mvcResult.getRequest().getSession();
     }
 
 	public MockHttpServletRequestBuilder getMethodBuilder(String url) {
-		return MockMvcRequestBuilders.get(url).headers(headers).cookie(cookies);
+		return MockMvcRequestBuilders.get(url).session(session).headers(headers);
 	}
 
 	public MockHttpServletRequestBuilder postMethodBuilder(String url) {
-		return MockMvcRequestBuilders.post(url).headers(headers).cookie(cookies);
+		return MockMvcRequestBuilders.post(url).session(session).headers(headers);
 	}
 
 	public MockHttpServletRequestBuilder putMethodBuilder(String url) {
-		return MockMvcRequestBuilders.put(url).headers(headers).cookie(cookies);
+		return MockMvcRequestBuilders.put(url).session(session).headers(headers);
 	}
 
 	public MockHttpServletRequestBuilder deleteMethodBuilder(String url) {
-		return MockMvcRequestBuilders.delete(url).headers(headers).cookie(cookies);
+		return MockMvcRequestBuilders.delete(url).session(session).headers(headers);
 	}
 
 	public MockHttpServletRequestBuilder multipartMethodBuilder(String url, MockMultipartFile file) {
-		return MockMvcRequestBuilders.multipart(url).file(file).headers(headers).cookie(cookies);
-	}
-
-	public MockHttpServletRequestBuilder putMultipartMethodBuilder(String url, MockMultipartFile file) {
-		return MockMvcRequestBuilders.multipart(url).file(file).headers(headers).cookie(cookies).with(new RequestPostProcessor() {
-
-			@Override
-			public MockHttpServletRequest postProcessRequest(MockHttpServletRequest request) {
-				request.setMethod("PUT");
-				return request;
-			}
-		});
+		return MockMvcRequestBuilders.multipart(url).file(file).session(session).headers(headers);
 	}
 }

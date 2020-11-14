@@ -76,6 +76,7 @@ public class NoticeController {
 	}
 
 	@DeleteMapping("/svc/api/notice/{noticeId}/files/{fileId}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void fileDelete(@PathVariable String noticeId, @PathVariable String fileId) {
 		NoticeVO notice = noticeService.selectNoticeInfo(noticeId);
 

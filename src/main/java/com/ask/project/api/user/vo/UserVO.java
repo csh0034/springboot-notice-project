@@ -8,7 +8,7 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
+@ToString(callSuper = true)
 public class UserVO extends SecurityUser {
 
 	private static final long serialVersionUID = 2144358115726549515L;

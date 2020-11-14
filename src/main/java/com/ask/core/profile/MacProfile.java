@@ -14,7 +14,7 @@ public class MacProfile {
 	public BasicProperties basicProperties() {
 		return BasicProperties.builder()
 					.profile("mac")
-					.uploadDir("~/dev/upload")
+					.uploadDir("~/temp-upload")
 					.build();
 	}
 }

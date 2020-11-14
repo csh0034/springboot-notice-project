@@ -1,11 +1,14 @@
 package com.ask.core.config;
 
+import java.nio.charset.Charset;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
@@ -73,5 +76,13 @@ public class WebConfig implements WebMvcConfigurer{
 		jsonView.setExtractValueFromSingleKeyModel(true);
 		jsonView.setPrettyPrint(true);
 		return jsonView;
+	}
+
+	@Bean
+	public HttpMessageConverter<?> jsonConverter() {
+		MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
+		converter.setDefaultCharset(Charset.forName("UTF-8"));
+
+		return converter;
 	}
 }
