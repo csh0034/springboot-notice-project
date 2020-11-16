@@ -68,7 +68,7 @@ public class NoticeController {
 
 		AttachmentVO attachment = attService.getFileInfor(fileId);
 
-		if (!string.equals(attachment.getAttachmentGroupId(), notice.getAttachmentGroupId())) {
+		if (attachment == null || !string.equals(attachment.getAttachmentGroupId(), notice.getAttachmentGroupId())) {
 			throw new InvalidationException("등록된 파일이 없습니다.");
 		}
 
@@ -88,7 +88,7 @@ public class NoticeController {
 
 		AttachmentVO attachment = attService.getFileInfor(fileId);
 
-		if (!string.equals(attachment.getAttachmentGroupId(), notice.getAttachmentGroupId())) {
+		if (attachment == null || !string.equals(attachment.getAttachmentGroupId(), notice.getAttachmentGroupId())) {
 			throw new InvalidationException("등록된 파일이 없습니다.");
 		}
 
