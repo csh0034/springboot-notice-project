@@ -1,6 +1,8 @@
 **/.gradle/
 **/build/
 
+**/generated
+
 ### STS ###
 .apt_generated
 .classpath

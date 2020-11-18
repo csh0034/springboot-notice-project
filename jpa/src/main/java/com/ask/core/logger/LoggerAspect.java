@@ -16,11 +16,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class LoggerAspect {
 
-	@Before("execution(* com.ask.project.api.*.service.impl.*Impl.*(..))")
+	@Before("execution(* com.ask.project.api.*.service.*.*(..))")
 	public void startLog(JoinPoint jp) {
 	}
 
-	@Around("execution(* com.ask.project.api.*.service.impl.*Impl.*(..))")
+	@Around("execution(* com.ask.project.api.*.service.*.*(..))")
 	public Object timeLog(ProceedingJoinPoint pjp) throws Throwable {
 		long startTime = System.currentTimeMillis();
 

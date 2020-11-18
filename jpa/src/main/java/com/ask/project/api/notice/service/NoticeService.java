@@ -8,7 +8,6 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -75,12 +74,13 @@ public class NoticeService {
 
 	public CorePagination<ComtNotice> getNoticeList(CorePaginationParam param, String title, Date beginDt, Date endDt) {
 
-		Page<ComtNotice> list = noticeRepository.findByTitleContaining(
-						string.isBlank(title) ? "" : title,
+		Page<ComtNotice> list = noticeRepository.searchAll(
+						title,
+						beginDt,
+						endDt,
 						PageRequest.of(
 							param.getPage().intValue() - 1,
-							param.getItemsPerPage().intValue(),
-							Sort.by("createdDt").descending()
+							param.getItemsPerPage().intValue()
 						)
 					);
 

@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.ask.project.api.notice.domain.ComtNotice;
 
-public interface NoticeRepository extends JpaRepository<ComtNotice, String> {
+public interface NoticeRepository extends JpaRepository<ComtNotice, String>, NoticeRepositoryCustom {
 
 	Page<ComtNotice> findByTitleContaining(String title, Pageable pageable);
 }
