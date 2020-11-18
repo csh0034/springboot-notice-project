@@ -26,11 +26,11 @@ public class ComtNotice {
 
 	@Id
 	@GenericGenerator(
-		name = "noticeGrpIdGenerator",
+		name = "noticeIdGenerator",
 		strategy = "com.ask.project.common.util.IdGenerator",
 		parameters = @Parameter(name = IdGenerator.PARAM_KEY, value = "notice-")
 	)
-	@GeneratedValue(generator = "noticeGrpIdGenerator")
+	@GeneratedValue(generator = "noticeIdGenerator")
 	private String noticeId;
 
 	private String title;
