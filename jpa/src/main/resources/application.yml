@@ -1,0 +1,46 @@
+server:
+  port: 80
+  
+spring:
+
+  data:    web:      pageable:        one-indexed-parameters: true
+        size-parameter: itmesPerpage
+
+  devtools: 
+    livereload:
+      enabled: true
+      
+  datasource:
+    schema:    - classpath*:db/1. schema.sql 
+    data:    - classpath*:db/2. data.sql
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:testdb;MODE=MySQL;
+    username: sa
+    password: sa
+    sql-script-encoding: UTF-8 
+      
+  h2:    console:      enabled: true
+ 
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    hibernate:
+      ddl-auto: update
+ 
+logging:
+  pattern:
+    console: '%clr(%d{HH:mm:ss.SSS}){faint} %clr(%5p) %clr([%4line]){magenta} %clr(%-40.40logger{39}){cyan} %clr(:){red} %m%n%wEx'
+  level:
+    root: info
+    jdbc.resultsettable: info
+    jdbc.sqlonly: info
+    
+    jdbc.sqltiming: error
+    jdbc.resultset: error
+    jdbc.sql: error
+    jdbc.audit: error
+    jdbc.connection: error
+    
+    com.ask: debug

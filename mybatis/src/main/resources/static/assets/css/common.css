@@ -1,0 +1,49 @@
+.form-control-sm {
+	height: calc(1.5em + .5rem + 2px);
+}
+.date-icon-begin, .date-icon-end{
+	font-size: 18px;
+}
+.card-body {
+	border-radius: .5rem
+}
+
+@font-face {
+	font-family: 'NotoKr';
+	font-style: normal;
+	font-weight: 100;
+	src: url('../fonts/notokr/notokr-light.eot');
+	src: url('../fonts/notokr/notokr-light.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/notokr/notokr-light.woff2') format('woff2'),
+		url('../fonts/notokr/notokr-light.woff') format('woff');
+}
+
+@font-face {
+	font-family: 'NotoKr';
+	font-style: normal;
+	font-weight: 300;
+	src: url('../fonts/notokr/notokr-regular.eot');
+	src: url('../fonts/notokr/notokr-regular.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/notokr/notokr-regular.woff2') format('woff2'),
+		url('../fonts/notokr/notokr-regular.woff') format('woff');
+}
+
+@font-face {
+	font-family: 'NotoKr';
+	font-style: normal;
+	font-weight: 500;
+	src: url('../fonts/notokr/notokr-medium.eot');
+	src: url('../fonts/notokr/notokr-medium.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/notokr/notokr-medium.woff2') format('woff2'),
+		url('../fonts/notokr/notokr-medium.woff') format('woff');
+}
+
+@font-face {
+	font-family: 'NotoKr';
+	font-style: normal;
+	font-weight: 700;
+	src: url('../fonts/notokr/notokr-bold.eot');
+	src: url('../fonts/notokr/notokr-bold.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/notokr/notokr-bold.woff2') format('woff2'),
+		url('../fonts/notokr/notokr-bold.woff') format('woff');
+}

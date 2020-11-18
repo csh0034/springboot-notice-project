@@ -1,0 +1,71 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/blank}">
+<head>
+<meta charset="UTF-8">
+<title>로그인</title>
+<script th:inline="javascript">
+	$(function() {
+
+		<!--/* 로그인 */-->
+		$('#btn-login').click(function() {
+
+			var loginId = $('#username').val(),
+				password = $('#password').val();
+
+			$component.get({
+				url: '/api/user/login',
+				data: {
+					loginId: loginId,
+					password: password,
+				},
+				success: function(data, status, xhr) {
+					$('#frm').submit();
+				}
+			});
+		});
+
+		<!-- /* 강제 로그인 */-->
+		$('.force-wrap button').click(function() {
+			 $('#username').val($(this).data('id'));
+			 $('#password').val('springboot!');
+
+			 $('#frm').submit();
+		});
+	});
+</script>
+</head>
+<body>
+<th:block layout:fragment="content">
+	<div class="col-md-4 col-10 box-shadow-2 p-0">
+		<div class="card border-grey border-lighten-3 m-0">
+			<div class="card-header border-0">
+				<h6 class="card-subtitle text-muted text-center font-large-1 pt-2"><span class="info">로그인</span></h6>
+			</div>
+			<div class="card-content">
+				<div class="card-body">
+					<form id="frm" th:action="@{/security/check}" method="post">
+						<div class="mb-1">
+							<label for="username" class="sr-only">Username</label>
+							<input type="text" id="username" name="username" class="form-control" value="user1" required autofocus>
+						</div>
+						<div class="mb-1">
+							<label for="password" class="sr-only">Password</label>
+							<input type="password" id="password" name="password" class="form-control" value="springboot!" required>
+						</div>
+						<div class="mb-1">
+							<input type='checkbox' name='remember' id="remember" class="skin-flat-blue"/><label for="remember" class="ml-1">로그인 유지</label>
+						</div>
+						<button class="btn btn-lg btn-info btn-block" type="button" id="btn-login">Login</button>
+					</form>
+				</div>
+			</div>
+			<div class="card-header border-0 text-center force-wrap">
+				<span class="mb-2 d-inline-block">테스트용 강제 로그인</span><br>
+				<button type="button" class="btn btn-primary btn-min-width mr-1 mb-1" data-id="user1">user1 / springboot!</button>
+				<button type="button" class="btn btn-primary btn-min-width mr-1 mb-1" data-id="user2">user2 / springboot!</button>
+				<button type="button" class="btn btn-primary btn-min-width mr-1 mb-1" data-id="user3">user3 / springboot!</button>
+	        </div>
+		</div>
+	</div>
+</th:block>
+</body>
+</html>

@@ -1,0 +1,206 @@
+@charset "UTF-8";
+
+.dev-error {
+	display: none;
+}
+
+.dev-error.on {
+	display: inline-block;
+}
+
+/* bootstrap.css */
+:root, html, body, input, button, select, optgroup, textarea, h1, h2, h3,
+	h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, .tooltip, .popover,
+	.text-monospace, .ui-widget, nav, ol, li, ul, .ui-jqgrid-view {
+	font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* ================================================================================
+thenet-framework
+- label
+- fieldset
+- button
+================================================================================ */
+.thenet-framework .card-header label {
+	margin: auto 5px;
+}
+
+.thenet-framework .card-header fieldset {
+	margin: auto 5px;
+}
+
+.thenet-framework .card-header button {
+	margin: auto 5px;
+}
+
+.thenet-framework .btn-group button {
+	margin: auto 0;
+}
+
+.thenet-framework .btn-group.btn-group-toggle label {
+	margin: auto 0;
+}
+
+.alert {
+	margin: auto 5px;
+}
+
+/***************************************
+	Toast Alert(Toast UI 아님)
+****************************************/
+.toast .toast-message {
+	font-size: 1.1rem
+}
+
+/***************************************
+	FileUpload
+****************************************/
+.-filezone button {
+	cursor: pointer;
+}
+
+.-filezone .-add {
+	border: 1px solid #c0c0c0;
+	padding: 3px 10px;
+}
+
+.-filezone .-info, .-filezone .-file {
+	display: inline-block;
+}
+
+.-info .-count, .-info .-exts, .-info .-sizeLimit {
+	padding: 0 5px;
+}
+
+.-info .-exts {
+	border-left: 1.5px solid #999999;
+	border-right: 1.5px solid #999999;
+}
+
+.-filezone .-count strong {
+	padding: 0 1px 0 0;
+}
+
+.-filezone .-exts strong, .-filezone .-sizeLimit strong {
+	color: #c7254e;
+}
+
+.-filezone .-file {
+	margin: 3px 6px 3px 0;
+	padding: 5px 11px;
+	border-radius: .25em;
+}
+
+.-filezone .-file .-download {
+	cursor: pointer;
+}
+
+.-filezone .-file .-remove {
+	border: 0;
+	border-radius: .3em;
+	font-weight: bold;
+	background-color: inherit;
+	padding: 0 4px 2px;
+	margin: 0 3px 0 0;
+}
+
+.-filezone .-list-wrap-old {
+	margin: 6px 0 0 0;
+}
+
+.-filezone .-list-wrap-new {
+	margin: 0 0 3px 0;
+}
+
+.-filezone .-list-wrap-old .-file, .-filezone .-list-wrap-old .-file .-remove
+	{
+	background-color: #efefef;
+}
+
+.-filezone .-list-wrap-old .-file {
+	border: 1px solid #d3d3d3;
+}
+
+.-filezone .-list-wrap-old .-file:hover, .-filezone .-list-wrap-old .-file:hover .-remove
+	{
+	background-color: #D5D5D5;
+}
+
+.-filezone .-list-wrap-new .-file, .-filezone .-list-wrap-new .-file .-remove
+	{
+	background-color: #FFF6F7;
+}
+
+.-filezone .-list-wrap-new .-file {
+	border: 1px solid #E7C2C7;
+}
+
+.-filezone .-list-wrap-old .-file .-remove:hover {
+	background-color: #6c757d;
+	color: white;
+}
+
+.-filezone .-list-wrap-new .-file .-remove:hover {
+	background-color: #B19297;
+	color: white;
+}
+
+/* Single File upload */
+.-filezone-single {
+	display: inline-block;
+	border: 1px solid #ebebeb;
+	height: 32px;
+}
+
+.-filezone-single button {
+	cursor: pointer;
+}
+
+.-filezone-single .-file {
+	display: inline-block;
+	min-width: 150px;
+	max-width: 420px;
+	position: relative;
+}
+
+.-filezone-single .-file .-remove {
+	position: absolute;
+	top: 0;
+	left: 0;
+	border: 0;
+	font-weight: bold;
+	background-color: #fff;
+	border-radius: .3em;
+	padding: 0 5px 2px;
+	margin: 3px 2px 0 3px;
+}
+
+.-filezone-single .-file .-remove:hover {
+	background-color: #6c757D;
+	color: white;
+}
+
+.-filezone-single .-file span {
+	padding: 0 55px 0 27px;
+	display: block;
+	height: 30px;
+	line-height: 30px;
+	max-width: 350px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.-filezone-single .-file .-download:hover {
+	cursor: pointer;
+	color: #337ab7;
+}
+
+.-filezone-single .-file .-add {
+	position: absolute;
+	right: 0;
+	top: 0;
+	border: 1px solid #c0c0c0;
+	padding: 3px 10px;
+	height: 30px;
+}

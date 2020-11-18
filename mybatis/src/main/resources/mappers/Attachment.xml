@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ask.project.api.attachment.service.impl.AttachmentMapper">
+
+	<sql id="comtAttachmentGroup-cols">
+		ATTACHMENT_GROUP_ID,
+		CREATOR_ID,
+		( SELECT USER_NM FROM COMT_USER WHERE USER_ID = CREATOR_ID ) CREATOR_NM,
+		UPDATER_ID,
+		( SELECT USER_NM FROM COMT_USER WHERE USER_ID = UPDATER_ID ) UPDATER_NM,
+		UPDATED_DT
+	</sql>
+
+	<sql id="comtAttachment-cols">
+		ATTACHMENT_ID,
+		ATTACHMENT_GROUP_ID,
+		FILE_NM,
+		CONTENT_TYPE,
+		FILE_SIZE,
+		SAVED_FILE_PATH,
+		DOWNLOAD_CNT,
+		FILE_DELETED,
+		CREATOR_ID,
+		( SELECT USER_NM FROM COMT_USER WHERE USER_ID = CREATOR_ID ) CREATOR_NM,
+		UPDATER_ID,
+		( SELECT USER_NM FROM COMT_USER WHERE USER_ID = UPDATER_ID ) UPDATER_NM,
+		UPDATED_DT
+	</sql>
+
+	<insert id="insertComtAttachmentGroup">
+		/* AttachmentMapper.insertComtAttachmentGroup */
+		INSERT INTO COMT_ATTACHMENT_GROUP (
+			ATTACHMENT_GROUP_ID,
+			CREATOR_ID,
+			CREATED_DT,
+			UPDATER_ID,
+			UPDATED_DT
+		) VALUES (
+			#{attachmentGroupId},
+			#{creatorId},
+			#{createdDt},
+			#{updaterId},
+			#{updatedDt}
+		)
+	</insert>
+
+	<delete id="deleteComtAttachmentGroup">
+		/* AttachmentMapper.deleteComtAttachmentGroup */
+		DELETE FROM
+			COMT_ATTACHMENT_GROUP
+		WHERE
+			ATTACHMENT_GROUP_ID = #{attachmentGroupId}
+	</delete>
+
+	<select id="selectComtAttachmentGroup" resultType="com.ask.project.api.attachment.vo.AttachmentGroupVO">
+		/* AttachmentMapper.selectComtAttachmentGroup */
+		SELECT
+			<include refid="comtAttachmentGroup-cols" />
+		FROM
+			COMT_ATTACHMENT_GROUP
+		WHERE
+			ATTACHMENT_GROUP_ID = #{attachmentGroupId}
+	</select>
+
+	<insert id="insertComtAttachments">
+		/* AttachmentMapper.insertComtAttachments */
+		INSERT INTO COMT_ATTACHMENT (
+			ATTACHMENT_ID,
+			ATTACHMENT_GROUP_ID,
+			FILE_NM,
+			CONTENT_TYPE,
+			FILE_SIZE,
+			SAVED_FILE_PATH,
+			DOWNLOAD_CNT,
+			FILE_DELETED,
+			CREATOR_ID,
+			CREATED_DT,
+			UPDATER_ID,
+			UPDATED_DT
+		) VALUES
+		<foreach collection="list" item="item" separator=",">
+		(
+			#{item.attachmentId},
+			#{item.attachmentGroupId},
+			#{item.fileNm},
+			#{item.contentType},
+			#{item.fileSize},
+			#{item.savedFilePath},
+			#{item.downloadCnt},
+			#{item.fileDeleted},
+			#{item.creatorId},
+			#{item.createdDt},
+			#{item.updaterId},
+			#{item.updatedDt}
+		)
+		</foreach>
+	</insert>
+
+	<delete id="deleteComtAttachment">
+		/* AttachmentMapper.deleteComtAttachment */
+		DELETE FROM
+			COMT_ATTACHMENT
+		WHERE
+			ATTACHMENT_ID = #{attachmentId}
+	</delete>
+
+	<update id="updateComtAttachments_removed">
+		/* AttachmentMapper.updateComtAttachments_removed */
+		UPDATE COMT_ATTACHMENT SET
+			FILE_DELETED = 1
+		WHERE
+			ATTACHMENT_GROUP_ID = #{attachmentGroupId}
+	</update>
+
+	<update id="updateComtAttachment_removed">
+		/* AttachmentMapper.updateComtAttachment_removed */
+		UPDATE COMT_ATTACHMENT SET
+			FILE_DELETED = 1
+		WHERE
+			ATTACHMENT_ID = #{attachmentId}
+	</update>
+
+	<update id="increaseDownloadCnt">
+		/* AttachmentMapper.increaseDownloadCnt */
+		UPDATE COMT_ATTACHMENT SET
+			DOWNLOAD_CNT = IFNULL(DOWNLOAD_CNT, 0) + 1
+		WHERE
+			ATTACHMENT_ID = #{attachmentId}
+	</update>
+
+	<select id="selectComtAttachments" resultType="com.ask.project.api.attachment.vo.AttachmentVO">
+		/* AttachmentMapper.selectComtAttachments */
+		SELECT
+			<include refid="comtAttachment-cols" />
+		FROM
+			COMT_ATTACHMENT
+		WHERE
+			ATTACHMENT_GROUP_ID = #{attachmentGroupId}
+	</select>
+
+	<select id="selectComtAttachment" resultType="com.ask.project.api.attachment.vo.AttachmentVO">
+		/* AttachmentMapper.selectComtAttachment */
+		SELECT
+			<include refid="comtAttachment-cols" />
+		FROM
+			COMT_ATTACHMENT
+		WHERE
+			ATTACHMENT_ID = #{attachmentId}
+	</select>
+
+	<select id="selectComtAttachmentGroupFileSize" resultType="Long">
+		/* AttachmentMapper.selectComtAttachmentGroupFileSize */
+		SELECT
+			IFNULL(SUM(IFNULL(FILE_SIZE,0)),0) AS FILE_SIZE
+		FROM
+			COMT_ATTACHMENT
+		WHERE
+			ATTACHMENT_GROUP_ID = #{attachmentGroupId}
+			AND FILE_DELETED = 0
+	</select>
+
+	<select id="existsComtAttachments" resultType="Boolean">
+		/* AttachmentMapper.existsComtAttachments */
+		SELECT
+			CASE WHEN COUNT(*) > 0 THEN 1 ELSE 0 END AS EXIST
+		FROM
+			COMT_ATTACHMENT
+		WHERE
+			ATTACHMENT_GROUP_ID = #{attachmentGroupId}
+	</select>
+</mapper>

@@ -1,0 +1,154 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	layout:decorate="~{layout/default}">
+<head>
+<meta charset="UTF-8">
+<title th:text="${isModify ? '수정' : '등록'}"></title>
+<script th:inline="javascript">
+
+	$(function() {
+		var attachmentGroupId = '[(${notice.attachmentGroupId})]';
+		var noticeId = '[(${notice.noticeId})]';
+		var isModify = '[(${isModify})]'
+
+		<!--/* 첨부파일 컴포넌트 */-->
+		$component.multipart.multi($('#filezone'), {
+            editable: true,
+            showInfo: true,
+            listUrl : '/api/notice/' + noticeId + '/files',
+            label: '파일추가',
+            sizeLimit : 1024 * 1024 * 30,
+            download: function(file) {
+                document.location = '/api/notice/' + noticeId + '/files/' + file.attachmentId
+            },
+            remove: function(file, callback) {
+
+                if (!confirm('삭제 하시겠습니까?')) return;
+
+                $component.delete({
+                    url: '/svc/api/notice/' + noticeId + '/files/' + file.attachmentId,
+                    data: {
+                        attachmentId: file.attachmentId
+                    },
+                    success: function(data, status, xhr) {
+                        callback();
+                    }
+                });
+
+            }
+        });
+
+		<!--/* 취소 버튼 */-->
+		$('#btn-cancel').click(function(){
+
+			if (!confirm('취소하시겠습니까?')) return;
+
+			if (isModify === 'true') {
+				location.href= '/screen/notice/detail?noticeId=' + noticeId;
+			} else {
+				location.href = '/screen/notice/index?condition=true';
+			}
+		});
+
+		<!--/* 목록 버튼 */-->
+		$('#btn-list').click(function(){
+			location.href = '/screen/notice/index?condition=true';
+		});
+
+		<!--/* 저장 버튼  */-->
+		$('#btn-save').click(function(){
+
+			if ($.isBlank($('#title').val())) {
+	        	alert('제목을 입력 해주세요.');
+	        	return;
+	        }
+			if ($.isBlank($('#content').val())) {
+				alert('내용을 입력 해주세요.');
+				return;
+			}
+			if (!confirm('저장하시겠습니까?')) return;
+
+			$component.multipart.post($('<form>'), {
+				url: '/svc/api/notice/' + noticeId,
+				data: {
+					title: $('#title').val(),
+					content: $('#content').val()
+				},
+				fileParameter: 'file',
+				files: $component.multipart.getFiles($('#filezone')),
+				success: function(data, status, xhr) {
+					location.href= '/screen/notice/detail?noticeId=' + data.noticeId;
+				}
+			});
+		});
+
+	});
+</script>
+<body>
+	<th:block layout:fragment="content">
+		<div class="row">
+		    <div class="col-12">
+		        <div class="card mb-1">
+		            <div class="card-header">
+		                <h3 class="d-inline" th:text="${isModify ? '공지사항 수정' : '공지사항 등록'}"></h3>
+		            </div>
+		            <form id="form" class="form form-horizontal form-bordered" th:object="${notice}">
+		                <div class="card-body p-1 mx-1 rounded bg-info bg-darken-3 text-white">
+		                    <span class="bold">공지사항 정보</span>
+		                </div>
+		                <div class="card-body pt-0 pl-1">
+		                    <div class="form-group row mb-0 border-bottom-grey border-bottom-lighten-3 border-bottom-grey border-bottom-lighten-3">
+		                        <div class="col-md-2 col-form bold bg-grey bg-lighten-3">제목</div>
+		                        <div class="col-md-10 col-form pl-2">
+		                        	 <input class="form-control position-inside-maxlength" maxlength="30" name="title" id="title"
+                                		th:value="*{title}" autocomplete="off"/>
+		                        </div>
+		                    </div>
+		                    <div th:if="${isModify}" class="form-group row mb-0 border-bottom-grey border-bottom-lighten-3 border-bottom-grey border-bottom-lighten-3">
+		                        <div class="col-md-2 col-form bold bg-grey bg-lighten-3">작성일</div>
+		                        <div class="col-md-4 col-form pl-2" th:text="${notice.createdDtime}"></div>
+		                        <div class="col-md-2 col-form bold bg-grey bg-lighten-3">작성자</div>
+		                        <div class="col-md-4 col-form pl-2"  th:text="|(${notice.creatorId})|"></div>
+		                    </div>
+                            <div th:if="${isModify}" class="form-group row mb-0 border-bottom-grey border-bottom-lighten-3 border-bottom-grey border-bottom-lighten-3">
+		                        <div class="col-md-2 col-form bold bg-grey bg-lighten-3">최종수정일</div>
+		                        <div class="col-md-4 col-form pl-2" th:text="${notice.updatedDtime}"></div>
+		                        <div class="col-md-2 col-form bold bg-grey bg-lighten-3">조회수</div>
+		                        <div class="col-md-4 col-form pl-2"  th:text="${notice.readCnt}"></div>
+		                    </div>
+		                    <div class="form-group row mb-0 border-bottom-grey border-bottom-lighten-3 border-bottom-grey border-bottom-lighten-3">
+		                        <div class="col-md-2 col-form bold bg-grey bg-lighten-3">내용</div>
+		                        <div class="col-md-10 col-form pre-wrap">
+		                        	<textarea id="content" name="content" rows="10" maxlength="40" class="form-control"
+		                        	style="width:100%; resize: none">[[*{content}]]</textarea>
+		                        </div>
+		                    </div>
+		                </div>
+		                <div class="card-body p-1 mx-1 rounded bg-info bg-darken-3 text-white">
+		                    <span class="bold">첨부파일</span>
+		                </div>
+		                <div class="card-body pt-0 pl-1">
+		                    <div class="form-group row mb-0 border-bottom-grey border-bottom-lighten-3 border-bottom-grey border-bottom-lighten-3">
+		                        <div class="col-md-12 col-form">
+		                            <div id="filezone" class="mr-2"></div>
+		                        </div>
+		                    </div>
+		                </div>
+		                <div class="card-body py-1 px-0 mx-1">
+		                    <div class="text-center">
+		                    	<button type="button" id="btn-cancel" class="btn btn-outline-danger mr-1">
+	                            <i class="ft-x"></i> 취소</button>
+		                        <button type="button" id="btn-save" class="btn btn-outline-warning mr-1">
+		                        <i class="ft-edit"></i> 저장</button>
+		                        <button type="button" id="btn-list" class="btn btn-outline-info">
+		                        <i class="ft-list"></i> 목록</button>
+		                    </div>
+		                </div>
+		            </form>
+		        </div>
+		    </div>
+		</div>
+	</th:block>
+</body>
+</html>

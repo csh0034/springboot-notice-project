@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ask.project.api.user.service.impl.UserMapper">
+
+	<select id="selectUserInfo" resultType="com.ask.project.api.user.vo.UserVO">
+		/* UserMapper.selectUserInfo */
+		SELECT
+			USER_ID,
+			LOGIN_ID,
+			PASSWORD,
+			USER_NM,
+			ENABLED
+		FROM
+			COMT_USER
+		WHERE
+			LOGIN_ID = #{loginId} AND ENABLED = 1
+	</select>
+
+	<select id="selectUserAuthority" resultType="String">
+		/* UserMapper.selectUserAuthority */
+		SELECT
+			AUTHORITY
+		FROM
+			COMT_USER
+		WHERE
+			USER_ID = #{userId}
+	</select>
+
+	<insert id="upsertUserTokenInfo">
+		/* UserMapper.insertUserTokenInfo */
+		INSERT INTO COMT_REMEMBER (
+			LOGIN_ID,
+			SERIES,
+			TOKEN,
+			UPDATED_DT
+		) VALUES (
+			#{loginId},
+			#{series},
+			#{token},
+			#{updatedDt}
+		) ON DUPLICATE KEY UPDATE
+			LOGIN_ID   = values(LOGIN_ID),
+			SERIES     = values(SERIES),
+			TOKEN      = values(TOKEN),
+			UPDATED_DT = values(UPDATED_DT)
+	</insert>
+
+	<update id="updateUserTokenInfo">
+		/* UserMapper.updateUserTokenInfo */
+		UPDATE COMT_REMEMBER SET
+			TOKEN		= #{token},
+			UPDATED_DT	= #{updatedDt}
+		WHERE
+			SERIES = #{series}
+	</update>
+
+	<select id="selectUserTokenInfo" resultType="com.ask.core.security.SecurityRememberToken">
+		/* UserMapper.selectUserTokenInfo */
+		SELECT
+			LOGIN_ID,
+			SERIES,
+			TOKEN,
+			UPDATED_DT
+		FROM
+			COMT_REMEMBER
+		WHERE
+			SERIES = #{_parameter}
+	</select>
+
+	<delete id="deleteUserTokenInfo">
+		/* UserMapper.deleteUserTokenInfo */
+		DELETE FROM
+			COMT_REMEMBER
+		WHERE
+			LOGIN_ID = #{_parameter}
+	</delete>
+
+</mapper>

@@ -1,0 +1,48 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<th:block th:fragment="nav">
+	<nav class="header-navbar navbar-expand-md navbar navbar-with-menu fixed-top navbar-light navbar-border navbar-shadow navbar-brand-center">
+      <div class="navbar-wrapper">
+        <div class="navbar-header">
+          <ul class="nav navbar-nav flex-row">
+			<li class="nav-item mobile-menu d-md-none mr-auto">
+				<a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#">
+					<i class="ft-menu font-large-1"></i>
+				</a>
+			</li>
+			<li class="nav-item">
+            	<a class="navbar-brand" th:href="@{/}" style="padding: 19px 0;">
+            		<span class="h3 brand-text">공지사항 웹 어플리케이션</span>
+            	</a>
+             </li>
+             <li class="nav-item d-md-none">
+             	<a class="nav-link open-navbar-container" data-toggle="collapse" data-target="#navbar-mobile" aria-expanded="true">
+             		<i class="fa fa-ellipsis-v"></i>
+             	</a>
+             </li>
+          </ul>
+        </div>
+        <div class="navbar-container content">
+          <div class="collapse navbar-collapse" id="navbar-mobile">
+            <ul class="nav navbar-nav mr-auto float-left">
+              <li class="nav-item d-none d-md-block"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu"></i></a></li>
+            </ul>
+            <ul class="nav navbar-nav float-right">
+            	<th:block sec:authorize="isAuthenticated()" >
+            		<li class="nav-item text-decoration-none">
+       					<span class="mt-1 mr-1 d-block" sec:authentication="principal.username"></span>
+            		</li>
+             		<li class="nav-item"><a class="btn btn-blue-grey round btn-min-width text-white" th:href="@{/security/logout}"><i class="ft-power"></i> Logout</a></li>
+            	</th:block>
+            	<th:block sec:authorize="not isAuthenticated()">
+            		<li class="nav-item"><a class="btn btn-blue-grey round btn-min-width text-white" th:href="@{/security/login}"><i class="ft-power"></i> LogIn</a></li>
+            	</th:block>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+</th:block>
+
+</html>

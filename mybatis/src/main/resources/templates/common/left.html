@@ -1,0 +1,18 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<th:block th:fragment="left">
+	<div class="main-menu menu-static menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
+		<div class="main-menu-content">
+			<ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+				<li class="nav-item"><a href="#"><i class="icon-book-open"></i><span class="menu-title">공지사항</span></a>
+					<ul class="menu-content">
+						<li><a class="menu-item" th:href="@{/screen/notice/index}">목록</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+</th:block>
+
+</html>
