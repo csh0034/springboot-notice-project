@@ -15,6 +15,7 @@
 ### jpa  
 ![Generic badge](https://img.shields.io/badge/spring--data--jpa-2.2.6-blueviolet.svg)
 ![Generic badge](https://img.shields.io/badge/hibernate--core-5.4.12.Final-ff69b4.svg)
+![Generic badge](https://img.shields.io/badge/querydsl-4.2.2-bbd.svg)
 ## 실행 방법
 
 Windows:
