@@ -2,6 +2,9 @@ package com.ask.project.common.util.pagination;
 
 import java.util.List;
 
+import lombok.ToString;
+
+@ToString
 public class CorePagination<T> extends CorePaginationParam {
 	private static final long serialVersionUID = 1356542032092086089L;
 	private Long totalItems;

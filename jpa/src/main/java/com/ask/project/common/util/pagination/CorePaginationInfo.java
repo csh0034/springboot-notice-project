@@ -1,5 +1,8 @@
 package com.ask.project.common.util.pagination;
 
+import lombok.ToString;
+
+@ToString
 public class CorePaginationInfo {
 	private Long page;
 	private Long itemsPerPage;

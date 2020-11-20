@@ -34,13 +34,4 @@ logging:
     console: '%clr(%d{HH:mm:ss.SSS}){faint} %clr(%5p) %clr([%4line]){magenta} %clr(%-40.40logger{39}){cyan} %clr(:){red} %m%n%wEx'
   level:
     root: info
-    jdbc.resultsettable: info
-    jdbc.sqlonly: info
-    
-    jdbc.sqltiming: error
-    jdbc.resultset: error
-    jdbc.sql: error
-    jdbc.audit: error
-    jdbc.connection: error
-    
     com.ask: debug

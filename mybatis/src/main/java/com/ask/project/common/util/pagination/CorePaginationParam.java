@@ -2,6 +2,9 @@ package com.ask.project.common.util.pagination;
 
 import java.io.Serializable;
 
+import lombok.ToString;
+
+@ToString
 public class CorePaginationParam implements Serializable {
 	private static final long serialVersionUID = 2153149594352856183L;
 	protected Long page;
