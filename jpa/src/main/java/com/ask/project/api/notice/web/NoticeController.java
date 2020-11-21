@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ask.core.config.BasicProperties;
 import com.ask.core.exception.InvalidationException;
+import com.ask.core.exception.NotFoundException;
 import com.ask.core.security.SecurityUser;
 import com.ask.core.security.SecurityUtils;
 import com.ask.core.util.CoreUtils.string;
@@ -57,9 +59,14 @@ public class NoticeController {
 	}
 
 	@GetMapping("/api/notice/{noticeId}/files")
-	public List<ComtAttachment> fileList(@PathVariable String noticeId) {
+	public ResponseEntity<List<ComtAttachment>> fileList(@PathVariable String noticeId) {
 		ComtNotice notice = noticeService.findNotice(noticeId);
-		return attService.getFileInfors_group(notice.getAttachmentGroupId());
+
+		if (string.isBlank(notice.getAttachmentGroupId())) {
+			return ResponseEntity.noContent().build();
+		}
+
+		return ResponseEntity.ok(attService.getFileInfors_group(notice.getAttachmentGroupId()));
 	}
 
 	@GetMapping("/api/notice/{noticeId}/files/{fileId}")
@@ -69,7 +76,7 @@ public class NoticeController {
 		ComtAttachment attachment = attService.getFileInfor(fileId);
 
 		if (attachment == null || !string.equals(attachment.getAttachmentGroupId(), notice.getAttachmentGroupId())) {
-			throw new InvalidationException("등록된 파일이 없습니다.");
+			throw new NotFoundException("등록된 파일이 없습니다.");
 		}
 
 		attService.downloadFile(response, properties.getUploadDir(), fileId);
@@ -89,7 +96,7 @@ public class NoticeController {
 		ComtAttachment attachment = attService.getFileInfor(fileId);
 
 		if (attachment == null || !string.equals(attachment.getAttachmentGroupId(), notice.getAttachmentGroupId())) {
-			throw new InvalidationException("등록된 파일이 없습니다.");
+			throw new NotFoundException("등록된 파일이 없습니다.");
 		}
 
 		attService.removeFile(properties.getUploadDir(), fileId);

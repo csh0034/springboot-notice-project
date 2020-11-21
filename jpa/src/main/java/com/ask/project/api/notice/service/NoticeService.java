@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ask.core.config.BasicProperties;
 import com.ask.core.exception.InvalidationException;
+import com.ask.core.exception.NotFoundException;
 import com.ask.core.security.SecurityUser;
 import com.ask.core.security.SecurityUtils;
 import com.ask.core.util.CoreUtils.string;
@@ -49,7 +50,7 @@ public class NoticeService {
 		ComtNotice dbNotice = noticeRepository.findById(noticeId).orElse(null);
 
 		if (dbNotice == null) {
-			throw new InvalidationException("등록된 공지사항이 없습니다.");
+			throw new NotFoundException("등록된 공지사항이 없습니다.");
 		}
 
 		return dbNotice;
@@ -64,7 +65,7 @@ public class NoticeService {
 		ComtNotice dbNotice = noticeRepository.findById(noticeId).orElse(null);
 
 		if (dbNotice == null || !dbNotice.getCompleted()) {
-			throw new InvalidationException("등록된 공지사항이 없습니다.");
+			throw new NotFoundException("등록된 공지사항이 없습니다.");
 		}
 
 		dbNotice.setReadCnt(dbNotice.getReadCnt() + 1);
@@ -131,13 +132,16 @@ public class NoticeService {
 
 		if (!dbNotice.getCompleted()) {
 			notice.setCreatorId(user.getUserId());
+			notice.setCreatorNm(user.getUserNm());
 			notice.setCreatedDt(now);
 		} else {
 			notice.setCreatorId(dbNotice.getCreatorId());
+			notice.setCreatorNm(dbNotice.getCreatorNm());
 			notice.setCreatedDt(dbNotice.getCreatedDt());
 		}
 
 		notice.setUpdaterId(user.getUserId());
+		notice.setUpdaterNm(user.getUserNm());
 		notice.setUpdatedDt(now);
 
 		long maxFileSize = 30 * 1024 * 1024;
@@ -165,8 +169,10 @@ public class NoticeService {
 		notice.setReadCnt(0L);
 		notice.setCompleted(false);
 		notice.setCreatorId(user.getUserId());
+		notice.setCreatorNm(user.getUserNm());
 		notice.setCreatedDt(now);
 		notice.setUpdaterId(user.getUserId());
+		notice.setUpdaterNm(user.getUserNm());
 		notice.setUpdatedDt(now);
 
 		return noticeRepository.save(notice);

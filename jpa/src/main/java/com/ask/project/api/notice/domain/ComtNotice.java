@@ -45,9 +45,13 @@ public class ComtNotice {
 
 	private String creatorId;
 
+	private String creatorNm;
+
 	private Date createdDt;
 
 	private String updaterId;
+
+	private String updaterNm;
 
 	private Date updatedDt;
 

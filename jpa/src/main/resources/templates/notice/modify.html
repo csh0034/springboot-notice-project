@@ -109,7 +109,7 @@
 		                        <div class="col-md-2 col-form bold bg-grey bg-lighten-3">작성일</div>
 		                        <div class="col-md-4 col-form pl-2" th:text="${notice.createdDtime}"></div>
 		                        <div class="col-md-2 col-form bold bg-grey bg-lighten-3">작성자</div>
-		                        <div class="col-md-4 col-form pl-2"  th:text="|(${notice.creatorId})|"></div>
+		                        <div class="col-md-4 col-form pl-2"  th:text="|${notice.creatorNm} (${notice.creatorId})|"></div>
 		                    </div>
                             <div th:if="${isModify}" class="form-group row mb-0 border-bottom-grey border-bottom-lighten-3 border-bottom-grey border-bottom-lighten-3">
 		                        <div class="col-md-2 col-form bold bg-grey bg-lighten-3">최종수정일</div>
