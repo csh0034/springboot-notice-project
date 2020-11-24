@@ -17,6 +17,12 @@ spring:
           sql-script-encoding: UTF-8 
       
   h2:    console:      enabled: true
+      
+  servlet:
+    multipart:
+      max-file-size: -1
+      max-request-size: -1
+      file-size-threshold: 1MB
  
 logging:
   pattern:

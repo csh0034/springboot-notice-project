@@ -2,7 +2,6 @@ server:
   port: 80
   
 spring:
-
   data:    web:      pageable:        one-indexed-parameters: true
         size-parameter: itmesPerpage
 
@@ -28,7 +27,12 @@ spring:
         format_sql: true
     hibernate:
       ddl-auto: update
- 
+      
+  servlet:
+    multipart:
+      max-file-size: -1
+      max-request-size: -1
+      file-size-threshold: 1MB 
 logging:
   pattern:
     console: '%clr(%d{HH:mm:ss.SSS}){faint} %clr(%5p) %clr([%4line]){magenta} %clr(%-40.40logger{39}){cyan} %clr(:){red} %m%n%wEx'
