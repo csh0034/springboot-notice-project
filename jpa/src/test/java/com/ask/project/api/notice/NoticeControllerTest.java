@@ -36,14 +36,14 @@ public class NoticeControllerTest extends TestControllerSupport {
 		MvcResult mvcResult = this.mvc.perform(builder)
 								.andExpect(status().isOk())
 								.andExpect(jsonPath("$.page").value("1"))
-								.andExpect(jsonPath("$.totalItems").value("3"))
-								.andExpect(jsonPath("$.list[0].noticeId").value("notice-03"))
+								.andExpect(jsonPath("$.totalItems").value("15"))
+								.andExpect(jsonPath("$.list[0].noticeId").value("notice-15"))
 								.andReturn();
 
 		assertEquals("application/json;charset=UTF-8", mvcResult.getResponse().getContentType());
 
 		log.info("======================================= 2. update =======================================");
-		MockMultipartFile file = new MockMultipartFile("file", "README.md", null, CoreUtils.file.getContent(new File("README.md")));
+		MockMultipartFile file = new MockMultipartFile("file", "build.gradle", null, CoreUtils.file.getContent(new File("build.gradle")));
 
 		builder = multipartMethodBuilder("/svc/api/notice/notice-01", file)
 				.param("title", "타이틀 변경")
@@ -64,7 +64,7 @@ public class NoticeControllerTest extends TestControllerSupport {
 
 		mvcResult = this.mvc.perform(builder)
 							.andExpect(status().isOk())
-							.andExpect(jsonPath("$.[0].fileNm").value("README.md"))
+							.andExpect(jsonPath("$.[0].fileNm").value("build.gradle"))
 							.andExpect(jsonPath("$.[0].creatorId").value("user-01"))
 							.andReturn();
 
